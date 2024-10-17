@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+   
+</head>
+<body>
+    {% if weather_data %}
+    <div class="weather-container">
+        <h1>{{ weather_data.city }}</h1>
+        <h2>{{ weather_data.temperature }}°C</h2>
+        <p>{{ weather_data.description }}</p>
+        <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
+        
+        <h3>5-Day Forecast:</h3>
+        <div class="forecast-container">
+            {% for day in weather_data.forecast %}
+                <div class="forecast-card" onclick="showDetails('{{ day.date }}')">
+                    <h4>{{ day.date }}</h4>
+                    <p>{{ day.forecasts.0.temperature }}°C</p>
+                    <img src="http://openweathermap.org/img/w/{{ day.forecasts.0.icon }}.png" alt="{{ day.forecasts.0.description }}">
+                </div>
+                <div id="details-{{ day.date }}" class="forecast-details" style="display: none;">
+                    {% for forecast in day.forecasts %}
+                        <div class="forecast-item">
+                            <p>Time: {{ forecast.time }}</p>
+                            <p>Temperature: {{ forecast.temperature }}°C</p>
+                            <p>Description: {{ forecast.description }}</p>
+                            <img src="http://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.description }}">
+                            <p>Wind Speed: {{ forecast.wind_speed }} m/s</p>
+                            <p>Humidity: {{ forecast.humidity }}%</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+  
+{% endif %}
+</body>
+</html>

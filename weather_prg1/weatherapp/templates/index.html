@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClimateEngine</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="city1" placeholder="Enter Your City " />
+        <button type="submit">Get Weather</button>
+    </form>
+
+    <div class="comparison-container">
+        {% if weather_data1 %}
+        <div class="city-container">
+            {% include 'city_weather.html' with weather_data=weather_data1 %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
